@@ -1,0 +1,74 @@
+.home-container {
+    margin: 0 auto;
+    margin: 0 auto;
+}
+
+
+.home-container .page-content .row{
+
+    margin-top: 10px;
+}
+
+.numbers{
+    color: #1890ff;
+}
+.numbers p{
+    color: black;
+}
+
+.member-redirect-link{
+    font-weight: normal;
+    font-size: large;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.ant-input{
+    color:#000000;
+}
+
+.Select.has-value.Select--single > .Select-control .Select-value .Select-value-label, .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+    color: #000000;
+    font-size: 14px;
+}
+
+.certificate-download-button{
+    background: linear-gradient(#2b93cd, #0a66b7);
+    height: 60px;
+    color: white;
+    border-radius: 0.375em ;
+    margin-top: 20px;
+    width: 500px;
+}
+
+
+.certificate-download-container{
+    margin-top: 100px ;
+    text-align:center;
+}
+
+.certificate-download-button:disabled {
+    opacity: 0.1;
+    cursor: auto;
+}
+
+.certificate-validate-button{
+    background: linear-gradient(#2b93cd, #0a66b7);
+    height: 40px;
+    color: white;
+    border-radius: 0.375em ;
+    margin-top: 20px;
+}
+
+
+.certificate-validate-container{
+    margin-top: 100px ;
+    text-align:center;
+}
+
+.certificate-validate-button:disabled {
+    opacity: 0.1;
+    cursor: auto;
+}

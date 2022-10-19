@@ -1,0 +1,56 @@
+.login-container {
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+.whitelink{
+    color: #DD3B30;
+    margin-left: 60px ;
+    font-weight: bold;
+    text-decoration: underline;
+
+}
+
+.white{
+    color: #DD3B30;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+a.col.whitelink {
+    color: #DD3B30;
+    margin-left: 60px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+a.col.white {
+    color: #DD3B30;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+a.col.white hover {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+a:not([href]):not([tabindex]) .col .whitelink {
+    color: #DD3B30 !important;
+    margin-left: 60px !important;
+    font-weight: bold !important;
+    text-decoration: underline !important;
+}
+
+.center{
+    width: 100%;
+    text-align: center;
+    line-height: 30px;
+}
