@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Col, Row, Tooltip} from "reactstrap";
 
 class Header extends Component {
     constructor(props) {
@@ -14,6 +13,7 @@ class Header extends Component {
             pmHeight: '0',
             checkBoxState: false,
             downloadRequestModal: false,
+            isAdmin:false,
         };
         this.designMargin = this.designMargin.bind(this);
     }
@@ -24,6 +24,7 @@ class Header extends Component {
             username: currentUser.username,
             name: currentUser.name, // User.firstName
             surname: currentUser.surname,
+            isAdmin: currentUser.isAdmin,
         });
         window.addEventListener('resize', this.designMargin)
     }
@@ -65,17 +66,44 @@ class Header extends Component {
         )
     }
 
+    openDownloadRequestModal = () => {
+        this.setState({downloadRequestModal: true})
+    };
+
+    closeDownloadRequestModal = () => {
+        this.setState({downloadRequestModal: false})
+    };
+
     render() {
 
-        return (
-        this.state.width > 991 ? (this.props.offsetWidth === null || this.props.offsetWidth === 24) ? {
+        let right = this.state.width > 991 ? (this.props.offsetWidth === null || this.props.offsetWidth === 24) ? {
             float: 'right',
             marginRight: '17em'
         } : {
             float: 'right',
             marginRight: '3em'
-        } : {float: 'right'}
-    );
+        } : {float: 'right'};
+
+        return !this.props.isAuthenticated ?
+            <div></div> :
+            (
+                <div>
+                    <div key={this.state.key} className="stylish-navbar row col-sm-12" id="merdingen">
+                        <div className="navbar-wrapper">
+                            <div className="navbar-toggle">
+                                <button type="button" className="navbar-toggler">
+                                    <span className="navbar-toggler-bar bar1"/>
+                                    <span className="navbar-toggler-bar bar2"/>
+                                    <span className="navbar-toggler-bar bar3"/>
+                                </button>
+                            </div>
+                            <div className="stylish-navbar-brand col-sm-12">
+                                {this.state.name} {this.state.surname} {this.state.isAdmin  ? " (ADMIN) " : "" }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
     }
 }
 

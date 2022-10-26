@@ -54,12 +54,13 @@ class LoginForm extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		this.props.form.validateFields((err, values) => {
-			//console.log("log: ", values);
+			console.log("log: ", values);
 			if (!err) {
 				const loginRequest = Object.assign({}, values);
 				login(loginRequest)
 					.then(response => {
 						localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+						console.log("caling this.props.onLogin();");
 						this.props.onLogin();
 					}).catch(error => {
 					console.log("error==>",error)

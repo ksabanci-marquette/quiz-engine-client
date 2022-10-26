@@ -27,7 +27,7 @@ class ResetPassword extends Component {
             this.setState({emailAvailable:false});
             return {
                 validateStatus: 'error',
-                errorMsg: 'Eposta boş olamaz.'
+                errorMsg: 'E-mail cannot be empty.'
             }
         }
 
@@ -134,7 +134,6 @@ class ResetPassword extends Component {
         };
         resetPassword(passwordResetRequest)
             .then(response => {
-                //this.props.history.push("/login");
                 notification.success({
                     message: 'QUIZ ENGINE',
                     description: "Follow the instructions sent to you by email to reset your password. ",

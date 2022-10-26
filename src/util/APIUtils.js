@@ -50,7 +50,7 @@ export function changePassword(changePasswordRequest) {
     }
     else {
         return request({
-            url: API_BASE_URL + "/auth/change-password",
+            url: API_BASE_URL + "/auth/update-password",
             method: 'POST',
             data: changePasswordRequest
         });

@@ -35,20 +35,25 @@ class Master extends Component {
 			isAuthenticated: false,
 			isLoading: false,
 			key: Math.random(),
-			offsetWidth: null,
-			cities:[],
-			branches:[],
-			allBranches:[],
+			offsetWidth: 0,
 			countBackFrom:30,
 			countingBack:false,
 			maxIdleTimeout:15,
-			showDownloadRequestTooltip: false,
 		};
+		console.log("inside Master constructor");
+		this.loadCurrentUser = this.loadCurrentUser.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
+		this.updateSidebarMenus = this.updateSidebarMenus.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
+		this.countback = this.countback.bind(this);
+		this.setOffsetWidth = this.setOffsetWidth.bind(this);
 
-		// this.listBranchesAll = this.listBranchesAll.bind(this);
+
 	}
 
 	componentWillMount() {
+		console.log("inside Master componentWillMount");
 		this.loadCurrentUser();
 	}
 
@@ -65,50 +70,50 @@ class Master extends Component {
 	}
 
 	loadCurrentUser() {
+		let self = this;
+		console.log("inside Master loadCurrentUser()");
 		const curLocation= this.props.location.pathname;
-		//console.log(curLocation);
+		console.log("curLocation: ",curLocation);
 		this.setState({isLoading: true});
+		console.log("getCurrentUser()");
 		getCurrentUser()
 			.then(response => {
+				console.log("=> then response,",response.data);
 				let currentUser = response.data;
-				this.setState({
+				self.setState({
 					currentUser: currentUser,
-					authorities: currentUser.authorities,
 					isAuthenticated: true,
 					isLoading: false
 				},()=> {
-					this.props.history.push((curLocation !== "/login") ? curLocation : "/homePage");
+					console.log("=> then response==> callback");
+					self.props.history.push((curLocation !== "/login") ? curLocation : "/homePage");
 					console.log("currentUser:",currentUser);
-					this.listBranchesAll();
-					if(currentUser.realm != null) {
-						this.listCities();
-						this.listBranches();
-					}
+
 				});
 			}).catch(error => {
 			if (curLocation === "/resetPassword" ||
 				curLocation.toString().startsWith("/changePassword")) {
 
-				this.setState({
+				self.setState({
 					isLoading: false,
 					currentUser: null,
 					isAuthenticated: false,
 				});
 			}
 			else {
-				this.setState({
+				self.setState({
 					isLoading: false,
 					currentUser: null,
 					isAuthenticated: false,
 				}, () => {
-					this.props.history.push("/login")
+					self.props.history.push("/login")
 				});
 			}
 
 		});
 	}
 
-	handleLogout(redirectTo = "/login", notificationType = "success", description = "SUCCESS!") {
+	handleLogout() {
 		localStorage.removeItem(ACCESS_TOKEN);
 		this.setState({
 			currentUser: null,
@@ -116,7 +121,8 @@ class Master extends Component {
 			visible:false,
 			countingBack:false,
 			countBackFrom:30,
-		},()=>this.props.history.push(redirectTo));
+			isLoading:false,
+		},()=>this.props.history.push('/login'));
 	}
 
 	handleLogin() {
@@ -129,7 +135,8 @@ class Master extends Component {
 	};
 
 	setOffsetWidth(value) {
-		this.setState({offsetWidth: value})
+		let self = this;
+		self.setState({offsetWidth: value});
 	}
 
 	_onAction(e) {
@@ -209,6 +216,8 @@ class Master extends Component {
 								   render={(props) => <ResetPassword {...props} />}/>
 							<Route path="/changePassword/:resetKey"
 								   render={(props) => <ChangePassword {...props} />}/>
+							<Route exact path="/homePage"
+								   render={(props) => <Home {...props} />}/>
 							<Redirect path="/" to="/login"/>
 							<Route component={NotFound}></Route>
 						</Switch>
@@ -244,17 +253,14 @@ class Master extends Component {
 								currentUser={this.state.currentUser}
 								location={this.props.location.pathname}
 								onLogout={this.handleLogout}
-								offsetWidth={this.state.offsetWidth}
-								showDownloadRequestTooltip={this.state.showDownloadRequestTooltip}/>
+								offsetWidth={this.state.offsetWidth}/>
 						<div className="content main-container" key={this.state.key}>
 							<Switch currentUser={this.state.currentUser}>
-								<Route exact path="/" render={(props) => <Home isAuthenticated={this.state.isAuthenticated}  currentUser={this.state.currentUser} authorities={this.state.authorities} {...props}  />}/>
+								<Route exact path="/" render={(props) =>
+									<Home isAuthenticated={this.state.isAuthenticated}  currentUser={this.state.currentUser} authorities={this.state.authorities} {...props}  />}/>
 
-								{
-									// this.rightExists("ROLE_RIGHT_MEMBER_READ") &&
-									// <Route path="/member" render={(props) =>
-									// 																			<Member {...props} handleLogout={this.handleLogout}/>}/>
-								}
+								<Route path="/homePage" render={(props) => <Home isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
 
 								<Redirect exact path="/login" to="/"/>
 								<Route component={NotFound}/>
