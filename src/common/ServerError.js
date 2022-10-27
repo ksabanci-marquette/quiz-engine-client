@@ -11,9 +11,9 @@ class ServerError extends Component {
                     500
                 </h1>
                 <div className="server-error-desc">
-                    Birşeyler Ters Gitti!
+                    Oh Snap!
                 </div>
-                <Link to="/"><Button className="server-error-go-back-btn" type="primary" size="large">Geri Gidebilirsiniz</Button></Link>
+                <Link to="/"><Button className="server-error-go-back-btn" type="primary" size="large">You Can Go Back</Button></Link>
             </div>
         );
     }

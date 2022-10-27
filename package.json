@@ -21,7 +21,10 @@
     "antd": "^3.24.1",
     "react-s-alert": "^1.4.1",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "text-mask-addons": "^3.8.0",
+    "react-text-mask": "^5.4.3",
+    "iban": "0.0.10"
   },
   "scripts": {
     "start": "react-app-rewired start",

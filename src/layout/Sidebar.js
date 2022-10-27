@@ -98,21 +98,21 @@ class Sidebar extends Component {
 								</span>
 							</a>
 							<div className="collapse" id='merdo'>
-{/*								<ul className="nav">
+							<ul className="nav">
 									<li onClick={(e) => this.onChangeSelected("member", "profil", e)}>
-											<Link to={{pathname:'/changePasswordInner'}} >
-											<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-mini-icon">C</span>
-											<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-normal">Change Password</span>
+											<Link to={{pathname:'/profile'}} >
+											{/*<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-mini-icon">P</span>*/}
+											<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-normal">Profile</span>
 										</Link>
 									</li>
 
-									<li>
-										<Link onClick={this.props.onLogout}>
-											<span className="sidebar-mini-icon">E</span>
-											<span className="sidebar-normal">Logout</span>
-										</Link>
-									</li>
-								</ul>*/}
+									{/*<li>*/}
+									{/*	<Link onClick={this.props.onLogout}>*/}
+									{/*		<span className="sidebar-mini-icon">E</span>*/}
+									{/*		<span className="sidebar-normal">Logout</span>*/}
+									{/*	</Link>*/}
+									{/*</li>*/}
+								</ul>
 							</div>
 						</div>
 					</div>

@@ -35,7 +35,7 @@ export function formatDateTime(dateTimeString) {
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
 
-  return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year + ' - ' + date.getHours() + ':' + date.getMinutes();
+  return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year + ' - ' + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
 }
 export function showAxiosError(error) {
     if (error.response) {
