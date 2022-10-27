@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import {getUserProfile, request} from '../util/APIUtils';
-import {Avatar, Tabs} from 'antd';
-import {deepCopyObject, formatDateTime, showAxiosError, trimObject} from '../util/Helpers';
+import {Tabs} from 'antd';
+import {deepCopyObject, showAxiosError, trimObject} from '../util/Helpers';
 import LoadingIndicator from '../common/LoadingIndicator';
 import './Profile.css';
 import NotFound from '../common/NotFound';
 import ServerError from '../common/ServerError';
 import Alert from "react-s-alert";
+import emailMask from "text-mask-addons/dist/emailMask";
+import MaskedInput from "react-text-mask";
 import {validateComponent, validateField} from "../common/validation";
+import {UncontrolledTooltip} from "reactstrap";
 import {API_BASE_URL} from "../constants";
-import PersonalInfo from "./PersonalInfo";
-import ChangePasswordForUser from "./ChangePasswordForUser";
 
 const TabPane = Tabs.TabPane;
 
-class Profile extends Component {
+class PersonalInfo extends Component {
     constructor(props) {
         super(props);
 
@@ -224,43 +225,111 @@ class Profile extends Component {
         };
 
         return (
-            <div className="profile">
+            <div className="personalInfo">
                 {
                     this.state.currentUser ? (
-                        <div className="user-profile">
-                            <div className="user-details">
-                                <div className="user-avatar">
-                                    <Avatar className="user-avatar-circle" style={{ backgroundColor: 'yellowgreen'}}>
-                                        {this.state.currentUser.name && this.state.currentUser.name.toUpperCase()}
-                                    </Avatar>
+
+                    <div className="card-body">
+                        <div className="FormRenk col-sm-12">
+                            <div className='col-sm-9 row'>
+                                <div className="col-sm-3">
+                                    <label>Name : </label>
                                 </div>
-                                <div className="user-summary">
-                                    <div className="full-name">{this.state.currentUser.name && this.state.currentUser.name}</div>
-                                    <div className="username">@{this.state.currentUser.username && this.state.currentUser.username}</div>
-                                    <div className="user-joined">
-                                        Joined {this.state.currentUser.creationDate && formatDateTime(this.state.currentUser.creationDate)}
+                                <div className="col-sm-9">
+                                    <div className={"form-group" + this.validateClass('tName')}>
+                                        <input className="form-control"
+                                               type="text"
+                                               name="name"
+                                               id="tName"
+                                               data-vlength="5,20"
+                                               onBlur={this.validateField}
+                                               ref="tName"
+                                               value={this.state.currentUser.name && this.state.currentUser.name}
+                                               onChange={(e) => this.onChange(e)}
+                                               disabled={this.state.fieldsDisabled}
+                                        />
+                                        {this.validateMessage('tName') !== "" &&
+                                        <UncontrolledTooltip placement="right" target="tName" delay={0}>
+                                            {this.validateMessage("tName")}
+                                        </UncontrolledTooltip>}
                                     </div>
                                 </div>
                             </div>
-                            <div className="user-poll-details">
-                                <Tabs defaultActiveKey="1"
-                                      animated={false}
-                                      tabBarStyle={tabBarStyle}
-                                      size="large"
-                                      className="profile-tabs">
-                                    <TabPane tab="Personal Info" key="1">
 
-                                        <PersonalInfo currentUser={this.state.currentUser}/>
-
-                                    </TabPane>
-                                    <TabPane tab="Password"  key="2">
-
-                                        <ChangePasswordForUser currentUser={this.state.currentUser}/>
-
-                                    </TabPane>
-                                </Tabs>
+                            <div className='col-sm-9 row'>
+                                <div className="col-sm-3">
+                                    <label>Lastname : </label>
+                                </div>
+                                <div className="col-sm-9">
+                                    <div className={"form-group" + this.validateClass('tSurname')}>
+                                        <input className="form-control"
+                                               type="text"
+                                               name="surname"
+                                               id="tSurname"
+                                               data-vlength="5,20"
+                                               onBlur={this.validateField}
+                                               ref="tSurname"
+                                               value={this.state.currentUser.surname && this.state.currentUser.surname}
+                                               onChange={(e) => this.onChange(e)}
+                                               disabled={this.state.fieldsDisabled}
+                                        />
+                                        {this.validateMessage('tSurname') !== "" &&
+                                        <UncontrolledTooltip placement="right" target="tSurname" delay={0}>
+                                            {this.validateMessage("tSurname")}
+                                        </UncontrolledTooltip>}
+                                    </div>
+                                </div>
                             </div>
+
+
+                            <div className='col-sm-9 row'>
+                                <div className="col-sm-3">
+                                    <label>Email : </label>
+                                </div>
+                                <div className="col-sm-9">
+                                    <div className={"form-group" + this.validateClass('tEmail')}>
+                                        <MaskedInput className="form-control"
+                                                     type="text"
+                                                     mask={emailMask}
+                                                     name="email"
+                                                     inputProps={{vdata: "email", vlength: '1,255'}}
+                                                     id="tEmail"
+                                                     onBlur={() => this.validateField({
+                                                         target: {
+                                                             id: "tEmail",
+                                                             dataset: {vdata: "email", vlength: '1,255'},
+                                                             value: this.state.currentUser.email
+                                                         }
+                                                     })}
+                                                     placeholder="_________@______.___"
+                                                     ref="tEmail"
+                                                     value={this.state.currentUser.email}
+                                                     onChange={(e) => this.onChange(e)}
+                                                     disabled={this.state.fieldsDisabled}
+                                        />
+                                        {this.validateMessage('tEmail') !== "" &&
+                                        <UncontrolledTooltip placement="right" target="tEmail" delay={0}>
+                                            {this.validateMessage("tEmail")}
+                                        </UncontrolledTooltip>}
+                                    </div>
+                                </div>
+                                <div className='col-sm-12'>
+                                    <button type="button" data-toggle="tooltip" data-placement="bottom"
+                                            style={{
+                                                background: 'linear-gradient(rgba(159, 208, 55, 0.6), #9fd037)',
+                                                float: 'right', padding: '10px 54px 10px 23px'
+                                            }}
+                                            rel="tooltip" className="TekBtn kaydet"
+                                            disabled={this.state.isLoading}
+                                            onClick={() => this.save()}>{this.state.mode === 'create' ? 'Save' : 'Save'}
+                                    </button>
+                                </div>
+                            </div>
+
+
+
                         </div>
+                    </div>
                     ): null
                 }
             </div>
@@ -268,4 +337,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default PersonalInfo;

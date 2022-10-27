@@ -25,6 +25,7 @@ import IdleTimer from 'react-idle-timer';
 
 import {showAxiosError} from "../util/Helpers";
 import Profile from "../page/Profile";
+import Quiz from "../page/Quiz";
 
 class Master extends Component {
 
@@ -263,6 +264,8 @@ class Master extends Component {
 								<Route path="/homePage" render={(props) => <Home isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
 								<Route path="/profile" render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
+								<Route path="/quiz" render={(props) => <Quiz isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
 
 								<Redirect exact path="/login" to="/"/>

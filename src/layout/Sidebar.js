@@ -101,17 +101,10 @@ class Sidebar extends Component {
 							<ul className="nav">
 									<li onClick={(e) => this.onChangeSelected("member", "profil", e)}>
 											<Link to={{pathname:'/profile'}} >
-											{/*<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-mini-icon">P</span>*/}
 											<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-normal">Profile</span>
 										</Link>
 									</li>
 
-									{/*<li>*/}
-									{/*	<Link onClick={this.props.onLogout}>*/}
-									{/*		<span className="sidebar-mini-icon">E</span>*/}
-									{/*		<span className="sidebar-normal">Logout</span>*/}
-									{/*	</Link>*/}
-									{/*</li>*/}
 								</ul>
 							</div>
 						</div>
@@ -127,34 +120,28 @@ class Sidebar extends Component {
 							sidebarItemColor="#6BD098"
 							clicked={this.onChangeSelected}/>
 
-{/*						{
-							<li>
-								<a data-toggle="collapse" href="#memberInfoSettings">
-									<i className="fas fa-user" style={{color: this.state.activeMenu === "Üyelik Bilgilerim" && "#6BD098"}}/>
-									<p style={{color: this.state.activeMenu === "Üyelik Bilgilerim" && "#6BD098"}}>Üyelik Bilgilerim<b className="caret"/></p>
-								</a>
+					</ul>
 
-								<div className="collapse " id="memberInfoSettings">
-									<ul className="nav submenu">
+					<ul className="nav">
+						<FirstLevelItem
+							name="quizResults"
+							label="Quiz Results"
+							isActive={selected === "quizResults"}
+							show={true}
+							icons="fa fa-question fa-fw"
+							sidebarItemColor="#6BD098"
+							clicked={this.onChangeSelected}/>
+					</ul>
 
-										<li className={selected === "memberInfo" ? 'active' : ''}
-											style={{"paddingLeft": "10px"}}
-											onClick={(e) => this.onChangeSelected("memberInfo", "Üyelik Bilgilerim", e)}>
-											<Link to={{pathname:'/memberInfo', cities:this.state.cities}}   >
-												<i style={{color: this.state.selected === 'memberInfo' && '#6BD098'}} className="fas fa-plus"/>
-												<span style={{color: this.state.selected === 'memberInfo' && '#6BD098'}}
-													  className="sidebar-normal">Oda Kayıt/İletişim Bilgilerim</span>
-											</Link>
-										</li>
-									</ul>
-								</div>
-							</li>
-						}*/}
-
-
-
-
-
+					<ul className="nav">
+						<FirstLevelItem
+							name="quizStats"
+							label="Quiz Stats"
+							isActive={selected === "quizStats"}
+							show={true}
+							icons="fa fa-bar-chart"
+							sidebarItemColor="#6BD098"
+							clicked={this.onChangeSelected}/>
 					</ul>
 
 					<ul className="nav" style={{position:"fixed", width:"260px", bottom: "0", zIndex:"100000"}}>

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import './Home.css';
 import LoadingIndicator from "../common/LoadingIndicator";
-import {Col, Label, Row, UncontrolledTooltip} from "reactstrap";
+import {Col, Row} from "reactstrap";
 import TextOverFlowTooltip from "../common/TextOverFlowTooltip";
-import {getUserProfile, request} from "../util/APIUtils";
-import {deepCopyObject, formatDateTime, showAxiosError, trimObject} from "../util/Helpers";
+import {request} from "../util/APIUtils";
+import {formatDateTime, showAxiosError} from "../util/Helpers";
 import {API_BASE_URL} from "../constants";
-import Alert from "react-s-alert";
 
 
 class Home extends Component {
@@ -17,26 +16,18 @@ class Home extends Component {
             currentUser: null,
             quizList:[]
         };
-        this.RightExists=this.RightExists.bind(this);
         this.fetchQuizList = this.fetchQuizList.bind(this);
+        this.goToQuizStats = this.goToQuizStats.bind(this);
+        this.goToQuiz = this.goToQuiz.bind(this);
     }
 
     componentDidMount() {
         this.setState({currentUser:this.props.currentUser});
-        this.fetchQuizList();
+        if(this.props.isAuthenticated) {
+            this.fetchQuizList();
+        }
     }
 
-    RightExists( searchItem){
-        let exists=false;
-        const authorities=this.props.authorities;
-        for (const authority of authorities)
-        {
-            if (authority.authority.includes(searchItem)) {
-                exists=true;
-            }
-        }
-        return exists;
-    }
 
     fetchQuizList(){
         let self = this;
@@ -57,6 +48,34 @@ class Home extends Component {
             self.setState({isLoading:false});
             showAxiosError(error);
         });
+    }
+
+    goToQuiz(itemId){
+        let self = this;
+        let params;
+        self.setState({isLoading:true});
+        let selectedQuiz = null;
+        let path ="/quiz/"+ itemId;
+        params = {
+            url: API_BASE_URL + path,
+            method: 'get'
+        };
+
+        request(params).then((response) => {
+            console.log(response.data);
+            self.setState({isLoading:false},
+                ()=> {
+                    this.props.history.push( {pathname: '/quiz', selectedQuiz:response.data}) });
+
+        }).catch(function (error) {
+            self.setState({isLoading:false});
+            showAxiosError(error);
+        });
+
+    }
+
+    goToQuizStats(itemId){
+
 
 
     }
@@ -67,11 +86,11 @@ class Home extends Component {
             return <LoadingIndicator />;
         }
 
-        console.log("this.state.quizList",this.state.quizList);
+        //console.log("this.state.quizList",this.state.quizList);
 
         return (
             <div className="home-container">
-                <p><h4>WELCOME TO QUIZ ENGINE - HERE ARE AVAILABLE QUIZZES FOR YOU</h4></p>
+                <p><h4>WELCOME TO QUIZ ENGINE <br/> HERE ARE AVAILABLE QUIZZES FOR YOU</h4></p>
 
                 <Row>
                     <Col sm="12" style={{
@@ -88,7 +107,8 @@ class Home extends Component {
                                 <th>Quiz Name</th>
                                 <th>Creation Date </th>
                                 <th>Max Attempts</th>
-                                <th>Valid Thru</th>
+                                <th>Valid Until</th>
+                                <th>Duration(secs)</th>
                                 <th width="25%">Action</th>
                             </tr>
                             </thead>
@@ -111,7 +131,36 @@ class Home extends Component {
                                                              maxLength={30}/>}</td>
 
                                     <td style={{margin: "0px", textAlign: "center"}}>{
-                                        }</td>
+                                        <TextOverFlowTooltip text={ document.duration && document.duration || "0"}
+                                                             maxLength={30}/>}</td>
+
+
+                                    {this.state.currentUser && this.state.currentUser.isAdmin
+                                        ?
+                                        <td style={{margin: "0px", textAlign: "center"}}>{
+                                            <button onClick={() => this.goToQuiz(document.id)}
+                                                    style={{
+                                                        margin: "0px",
+                                                        textAlign: "center",
+                                                        color: 'white',
+                                                        backgroundColor: 'rgb(118 138 239)'
+                                                    }}>
+                                                Start Quiz</button>}</td>
+
+                                        :
+                                        <td style={{margin: "0px", textAlign: "center"}}>{
+                                            <button onClick={() => this.goToQuizStats(document.id)}
+                                                    style={{
+                                                        margin: "0px",
+                                                        textAlign: "center",
+                                                        color: 'white',
+                                                        backgroundColor: 'rgb(118 138 239)'
+                                                    }}>
+                                                Show Stats</button>}</td>
+                                    }
+
+                                    <td style={{margin: "0px", textAlign: "center"}}>{
+                                    }</td>
 
                                     <td style={{margin: "0px"}}></td>
                                 </tr>
