@@ -98,7 +98,7 @@ class Header extends Component {
                                 </button>
                             </div>
                             <div className="stylish-navbar-brand col-sm-12">
-                                {this.state.name} {this.state.surname} {this.state.isAdmin  ? " (ADMIN) " : "" }
+                                {this.state.name} {this.state.surname} {this.state.isAdmin  ? " (ADMIN) " : "(STUDENT)" }
                             </div>
                         </div>
                     </div>

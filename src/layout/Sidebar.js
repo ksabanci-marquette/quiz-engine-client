@@ -125,10 +125,10 @@ class Sidebar extends Component {
 					<ul className="nav">
 						<FirstLevelItem
 							name="quizResults"
-							label="Quiz Results"
+							label="My Quiz Results"
 							isActive={selected === "quizResults"}
 							show={true}
-							icons="fa fa-question fa-fw"
+							icons="fa fa-sort-numeric-desc fa-fw"
 							sidebarItemColor="#6BD098"
 							clicked={this.onChangeSelected}/>
 					</ul>

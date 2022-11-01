@@ -26,6 +26,7 @@ import IdleTimer from 'react-idle-timer';
 import {showAxiosError} from "../util/Helpers";
 import Profile from "../page/Profile";
 import Quiz from "../page/Quiz";
+import Submitted from "../page/Submitted";
 
 class Master extends Component {
 
@@ -266,6 +267,10 @@ class Master extends Component {
 								<Route path="/profile" render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
 								<Route path="/quiz" render={(props) => <Quiz isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
+								<Route path="/submitSuccessful" render={(props) => <Submitted isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
+
 
 
 								<Redirect exact path="/login" to="/"/>

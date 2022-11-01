@@ -177,7 +177,7 @@ class ResetPassword extends Component {
                                     >Reset Password</Button>
                         </FormItem>
                         <FormItem>
-                            <Link className="resetpassword-link " to="/Login"><b>Return Home Page</b></Link>
+                            <Link className="resetpassword-link " to="/login"><b>Return Home Page</b></Link>
                         </FormItem>
                     </Form>
                 </div>

@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import './Home.css';
 import {Radio} from 'antd';
-import {deepCopyObject, formatDateTime} from "../util/Helpers";
+import {deepCopyObject, formatDateTime, showAxiosError} from "../util/Helpers";
+import Alert from "react-s-alert";
+import {API_BASE_URL} from "../constants";
+import {request} from "../util/APIUtils";
 
 class Quiz extends Component {
     constructor(props) {
@@ -10,6 +13,7 @@ class Quiz extends Component {
             isLoading: false,
             selectedQuiz: null,
             countingBack:true,
+            currentUser:null,
             userAnswers:[],
         };
 
@@ -17,16 +21,33 @@ class Quiz extends Component {
         this.timer = this.timer.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onValueChange = this.onValueChange.bind(this);
+        this.initializeUserAnswers = this.initializeUserAnswers.bind(this);
 
     }
 
     componentDidMount() {
         this.setState({
+            currentUser : this.props.location.currentUser,
             selectedQuiz: this.props.location.selectedQuiz,
-            countBackFrom: this.props.location.selectedQuiz && this.props.location.selectedQuiz.duration ? this.props.location.selectedQuiz.duration : 1000
+            countBackFrom: this.props.location.selectedQuiz && this.props.location.selectedQuiz.duration ? this.props.location.selectedQuiz.duration : 1000,
+            userAnswers:this.initializeUserAnswers()
         }, () => {
-            this.countback(); })
+            this.countback(); });
+
     }
+
+    initializeUserAnswers(){
+        let length = (this.props.location.selectedQuiz&& this.props.location.selectedQuiz.quizQuestionList) ? this.props.location.selectedQuiz.quizQuestionList.length :0;
+        let userAnswers=[];
+        for(let i=0;i<length;i++)
+        {
+            userAnswers[i] = null;
+        }
+        console.log("userAnswers initialized: ",userAnswers);
+        return userAnswers;
+    }
+
+
 
     async countback(){
         let self=this;
@@ -36,14 +57,56 @@ class Quiz extends Component {
         }
         if(self.state.countBackFrom===0)
         {
-            self.setState({countingBack:false},()=>this.handleSubmit());
+            self.setState({countingBack:false},()=>this.handleSubmit("timeout"));
         }
     }
 
-    handleSubmit(){
+    handleSubmit(submittedBy){
+        let self = this;
+        let params;
+        let data;
+        let message;
+        if (!this.state.userAnswers || !this.state.selectedQuiz || !this.state.currentUser)
+            return;
 
+        if( submittedBy !== "timeout" && this.state.userAnswers.filter(item => item == null).length>0){
+            Alert.error('You do  not seem to have answered all questions, please answer all!', {
+                position: 'top-right',
+                effect: 'stackslide',
+                timeout: 5000
+            });
+            return;
+        }
+
+        self.setState({isLoading:true});
+        data = {'userAnswers': this.state.userAnswers ,
+            'quizId':this.state.selectedQuiz.id,
+            'quizQuestionList':this.state.selectedQuiz.quizQuestionList };
+        console.log("data",data);
+        message = (submittedBy === "timeout") ? 'Quiz Submitted By Timeout.' :  'Quiz Submitted Successfully.'
+        params = {
+            url: API_BASE_URL + "/quiz/submit",
+            data: data,
+            method: 'post'
+        };
+        request(params).then(() => {
+            Alert.success(
+                message, {
+                    position: 'top-right',
+                    effect: 'stackslide',
+                    timeout: 5000
+                });
+            self.setState({isLoading:false, userAnswers:null},
+                ()=> this.props.history.push('/submitSuccessful'));
+
+        }).catch(function (error) {
+            self.setState({isLoading:false});
+            showAxiosError(error);
+        });
 
     }
+
+
 
     onValueChange(index1,index2){
         let self = this;
@@ -57,6 +120,7 @@ class Quiz extends Component {
             );
         }
     }
+
 
     timer(ms) {
         let self=this;
@@ -135,6 +199,20 @@ class Quiz extends Component {
                             </div>
                         )}
                     </div>
+
+                    <div className='col-sm-12'>
+                        <button type="button" data-toggle="tooltip" data-placement="bottom"
+                                style={{
+                                    background: 'linear-gradient(rgba(159, 208, 55, 0.6), #9fd037)',
+                                    float: 'right', padding: '10px 54px 10px 23px'
+                                }}
+                                rel="tooltip" className="TekBtn kaydet"
+                                disabled={this.state.isLoading || this.state.selectedQuiz.quizQuestionList.length==0 }
+                                onClick={() => this.handleSubmit("user")}>{this.state.mode === 'create' ? 'Submit Quiz' : 'Submit Quiz'}
+                        </button>
+                    </div>
+
+
                 </div>
             </div>
         );
