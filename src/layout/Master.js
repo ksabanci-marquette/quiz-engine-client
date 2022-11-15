@@ -27,6 +27,8 @@ import {showAxiosError} from "../util/Helpers";
 import Profile from "../page/Profile";
 import Quiz from "../page/Quiz";
 import Submitted from "../page/Submitted";
+import UserList from "../page/UserList";
+import QuestionList from "../page/QuestionList";
 
 class Master extends Component {
 
@@ -269,6 +271,11 @@ class Master extends Component {
 								<Route path="/quiz" render={(props) => <Quiz isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
 								<Route path="/submitSuccessful" render={(props) => <Submitted isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
+								<Route path="/UserList" render={(props) => <UserList isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
+								<Route path="/questionList" render={(props) => <QuestionList isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
+
 
 
 

@@ -122,6 +122,7 @@ class Sidebar extends Component {
 
 					</ul>
 
+					{this.props.currentUser && !this.props.currentUser.isAdmin &&
 					<ul className="nav">
 						<FirstLevelItem
 							name="quizResults"
@@ -132,6 +133,38 @@ class Sidebar extends Component {
 							sidebarItemColor="#6BD098"
 							clicked={this.onChangeSelected}/>
 					</ul>
+					}
+
+					{this.props.currentUser && this.props.currentUser.isAdmin &&
+
+					<ul className="nav">
+						<FirstLevelItem
+							name="userList"
+							label="User List"
+							isActive={selected === "userList"}
+							show={true}
+							icons="fa fa-user"
+							sidebarItemColor="#6BD098"
+							clicked={this.onChangeSelected}/>
+					</ul>
+
+					}
+
+					{this.props.currentUser && this.props.currentUser.isAdmin &&
+
+					<ul className="nav">
+						<FirstLevelItem
+							name="questionList"
+							label="Question List"
+							isActive={selected === "questionList"}
+							show={true}
+							icons="fa fa-question"
+							sidebarItemColor="#6BD098"
+							clicked={this.onChangeSelected}/>
+					</ul>
+
+					}
+
 
 					<ul className="nav">
 						<FirstLevelItem
