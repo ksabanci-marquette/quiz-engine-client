@@ -29,6 +29,8 @@ import Quiz from "../page/Quiz";
 import Submitted from "../page/Submitted";
 import UserList from "../page/UserList";
 import QuestionList from "../page/QuestionList";
+import QuizList from "../page/QuizList";
+import QuizStats from "../page/QuizStats";
 
 class Master extends Component {
 
@@ -276,7 +278,9 @@ class Master extends Component {
 
 								<Route path="/questionList" render={(props) => <QuestionList isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
+								<Route path="/quizList" render={(props) => <QuizList isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
+								<Route path="/quizStats" render={(props) => <QuizStats isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} authorities={this.state.authorities} handleLogout={this.handleLogout} {...props}/>}/>
 
 
 

@@ -24,12 +24,15 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.setState({currentUser:this.props.currentUser});
-        if(this.props.isAuthenticated) {
-            this.fetchQuizList();
-            this.fetchLatest();
+        this.setState({currentUser:this.props.currentUser},
+            () =>{
+                if(this.props.isAuthenticated) {
+                    this.fetchQuizList();
+                    this.fetchLatest();
 
-        }
+                }
+            }
+        );
     }
 
 
@@ -37,9 +40,9 @@ class Home extends Component {
         let self = this;
         let params;
         self.setState({isLoading:true});
-
-        //let path = this.state.currentUser && this.state.currentUser.isAdmin ? "/quiz" :"/quiz/available";
-        let path ="/quiz/available";
+        console.log("this.state.currentUser ", this.state.currentUser);
+        let path = this.state.currentUser && this.state.currentUser.isAdmin ? "/quiz" :"/quiz/available";
+        //let path ="/quiz/available";
         params = {
             url: API_BASE_URL + path,
             method: 'get'
@@ -99,9 +102,12 @@ class Home extends Component {
 
     }
 
-    goToQuizStats(itemId){
+    goToQuizStats(itemId,name){
+
+        let self = this;
 
 
+        this.props.history.push( {pathname: '/quizStats', id:itemId,quizName:name, currentUser: this.state.currentUser});
 
     }
 
@@ -180,7 +186,7 @@ class Home extends Component {
 
                                         :
                                         <td style={{margin: "0px", textAlign: "center"}}>{
-                                            <button onClick={() => this.goToQuizStats(document.id)}
+                                            <button onClick={() => this.goToQuizStats(document.id,document.quizName)}
                                                     style={{
                                                         margin: "0px",
                                                         textAlign: "center",

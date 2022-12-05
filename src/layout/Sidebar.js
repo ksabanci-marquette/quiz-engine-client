@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import FirstLevelItem from "../common/FirstLevelItem";
 import {Col, Row} from "reactstrap";
-import {RightExists} from "../util/Helpers";
-import {Button, Modal} from "antd";
+import {Modal} from "antd";
 
 class Sidebar extends Component {
 	constructor(props) {
@@ -98,9 +97,9 @@ class Sidebar extends Component {
 								</span>
 							</a>
 							<div className="collapse" id='merdo'>
-							<ul className="nav">
+								<ul className="nav">
 									<li onClick={(e) => this.onChangeSelected("member", "profil", e)}>
-											<Link to={{pathname:'/profile'}} >
+										<Link to={{pathname:'/profile'}} >
 											<span style={{color: this.state.activeMenu === "Profil" && "#6BD098"}} className="sidebar-normal">Profile</span>
 										</Link>
 									</li>
@@ -139,6 +138,21 @@ class Sidebar extends Component {
 
 					<ul className="nav">
 						<FirstLevelItem
+							name="quizList"
+							label="Quiz List"
+							isActive={selected === "quizList"}
+							show={true}
+							icons="fa fa-info"
+							sidebarItemColor="#6BD098"
+							clicked={this.onChangeSelected}/>
+					</ul>
+
+					}
+
+					{this.props.currentUser && this.props.currentUser.isAdmin &&
+
+					<ul className="nav">
+						<FirstLevelItem
 							name="userList"
 							label="User List"
 							isActive={selected === "userList"}
@@ -165,6 +179,7 @@ class Sidebar extends Component {
 
 					}
 
+					{this.props.currentUser && this.props.currentUser.isAdmin &&
 
 					<ul className="nav">
 						<FirstLevelItem
@@ -176,6 +191,7 @@ class Sidebar extends Component {
 							sidebarItemColor="#6BD098"
 							clicked={this.onChangeSelected}/>
 					</ul>
+					}
 
 					<ul className="nav" style={{position:"fixed", width:"260px", bottom: "0", zIndex:"100000"}}>
 						<li

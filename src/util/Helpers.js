@@ -11,10 +11,10 @@ export function formatDate(dateString) {
     const date = new Date(dateString);
 
     const monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
     ];
 
     const monthIndex = date.getMonth();
@@ -24,19 +24,21 @@ export function formatDate(dateString) {
 }
 
 export function formatDateTime(dateTimeString) {
-  const date = new Date(dateTimeString);
+    const date = new Date(new Date(dateTimeString).toLocaleString('en', {timeZone: 'UTC'}))
 
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr",
-    "May", "Jun", "Jul", "Aug",
-    "Sep", "Oct", "Nov", "Dec"
-  ];
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr",
+        "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"
+    ];
 
-  const monthIndex = date.getMonth();
-  const year = date.getFullYear();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
 
-  return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year + ' - ' + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
+    return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year + ' - ' + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
 }
+
+
 export function showAxiosError(error) {
     if (error.response) {
         let response = error.response;
@@ -131,10 +133,10 @@ export async function newWindow(data,classnameSuffix) {
     if (data.toString().substring(0,20)!=="data:application/pdf") {
         var classnameSuffix;
         var image = new Image();
-            image.src =  data;
-            image.className='center-fit '+classnameSuffix;
-            var w = window.open('','Image');
-            console.log("classnameSuffix",classnameSuffix);
+        image.src =  data;
+        image.className='center-fit '+classnameSuffix;
+        var w = window.open('','Image');
+        console.log("classnameSuffix",classnameSuffix);
         setTimeout(function(){
             w.document.write('<html><head><style>* { margin: 0; padding: 0; } .imgbox { display: grid; height: 100%; }  .center-fit { max-width: 100%; max-height: 100vh; margin: auto;} ' +
                 '      .rotate90 {\n' +
@@ -203,7 +205,7 @@ export function RightExists( searchItem,givenAuthorities){
 }
 
 export function getCitySubdivisions(cityId,allCitySubdivisions){
-  return  allCitySubdivisions ? allCitySubdivisions.filter(item => item.cityId === Number(cityId)).map(item => ({value: item.id.toString(), label: item.name})) : [];
+    return  allCitySubdivisions ? allCitySubdivisions.filter(item => item.cityId === Number(cityId)).map(item => ({value: item.id.toString(), label: item.name})) : [];
 }
 
 export function getCitySubdivisions_(cityId,allCitySubdivisions){
@@ -219,10 +221,10 @@ export function getCitySubdivisions_(cityId,allCitySubdivisions){
         }
     }else if(allCitySubdivisions && cityId===null){
         for (const citySubdivision of allCitySubdivisions) {
-                citySubdivisions.push({
-                    value: Number(citySubdivision.id),
-                    label: citySubdivision.name
-                })
+            citySubdivisions.push({
+                value: Number(citySubdivision.id),
+                label: citySubdivision.name
+            })
         }
     }
 
@@ -299,18 +301,18 @@ export function validateEmail(email) {
 
 export async function checkEmailAvailable(emailValue,recordId) {
     await checkEmailAvailabilityNotIn(emailValue,recordId)
-    .then(response => {
-        if(response.data.available) {
-            console.log("true");
-            return true;
-        } else {
-            console.log("false");
+        .then(response => {
+            if(response.data.available) {
+                console.log("true");
+                return true;
+            } else {
+                console.log("false");
+                return false;
+            }
+        }).catch(error => {
+            console.log("ERROR!!!!!!!!!!");
             return false;
-        }
-    }).catch(error => {
-        console.log("ERROR!!!!!!!!!!");
-        return false;
-});
+        });
 }
 
 export  function  getLabelByValue(arr, value, currency) {

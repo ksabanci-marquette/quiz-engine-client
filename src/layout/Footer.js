@@ -6,7 +6,7 @@ class Footer extends Component {
             <footer className="main-footer">
                 <div className="container-fluid">
                     <div className="copyright">
-                      QUIZ ENGINE - <b>Iteration 2</b>
+                      QUIZ ENGINE - <b>Iteration 3</b>
                     </div>
                 </div>
             </footer>

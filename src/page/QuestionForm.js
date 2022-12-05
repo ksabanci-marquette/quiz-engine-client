@@ -301,7 +301,7 @@ class QuestionForm extends Component {
                                                type="text"
                                                name="title"
                                                id="tTitle"
-                                               data-vlength="5,20"
+                                               data-vlength="1,20"
                                                onBlur={this.validateField}
                                                ref="tTitle"
                                                value={this.state.selectedQuestion && this.state.selectedQuestion.title}
@@ -326,7 +326,7 @@ class QuestionForm extends Component {
                                                type="text"
                                                name="description"
                                                id="tDescription"
-                                               data-vlength="5,200"
+                                               data-vlength="1,500"
                                                onBlur={this.validateField}
                                                ref="tDescription"
                                                value={this.state.selectedQuestion && this.state.selectedQuestion.description}
@@ -393,7 +393,7 @@ class QuestionForm extends Component {
                                                    type="text"
                                                    name={"tDescription" + index}
                                                    id={"tDescription" + index}
-                                                   data-vlength="5,200"
+                                                   data-vlength="1,500"
                                                    onBlur={this.validateField}
                                                    ref={"tDescription" + index}
                                                    value={this.state.selectedQuestion && this.state.selectedQuestion.questionAnswers[index].answerDescription}
