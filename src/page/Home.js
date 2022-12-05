@@ -124,7 +124,7 @@ class Home extends Component {
                 <p><h4>WELCOME TO QUIZ ENGINE </h4></p><br/>
                 {this.state.currentUser && this.state.currentUser.isAdmin
                     ?
-                    <p><h4>HERE IS A LIST OF ALL VALID QUIZZES</h4></p>
+                    <p><h4>HERE IS A LIST OF ALL QUIZZES</h4></p>
                     :
                     <p><h4>HERE ARE AVAILABLE QUIZZES FOR YOU</h4></p>
                 }

@@ -56,14 +56,14 @@ export function showAxiosError(error) {
                 timeout: 5000
             });
         } else if (error.response.status === 401) {
-            Alert.error('Bu işlemi yapmaya yetkiniz yok. Sistem Yöneticinizle İrtibata Geçiniz!', {
+            Alert.error(response.data.message, {
                 position: 'top-right',
                 effect: 'stackslide',
                 timeout: 5000
             });
         }
         else {
-            let message = "İşleminiz şuan gerçekleştirilemiyor...";
+            let message = "Cannot Complete Your Request...";
             if (response.data.message) {
                 message = response.data.message;
             } else if (response.data.Exception) {

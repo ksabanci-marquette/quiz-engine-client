@@ -138,21 +138,6 @@ class Sidebar extends Component {
 
 					<ul className="nav">
 						<FirstLevelItem
-							name="quizList"
-							label="Quiz List"
-							isActive={selected === "quizList"}
-							show={true}
-							icons="fa fa-info"
-							sidebarItemColor="#6BD098"
-							clicked={this.onChangeSelected}/>
-					</ul>
-
-					}
-
-					{this.props.currentUser && this.props.currentUser.isAdmin &&
-
-					<ul className="nav">
-						<FirstLevelItem
 							name="userList"
 							label="User List"
 							isActive={selected === "userList"}
@@ -183,15 +168,30 @@ class Sidebar extends Component {
 
 					<ul className="nav">
 						<FirstLevelItem
-							name="quizStats"
-							label="Quiz Stats"
-							isActive={selected === "quizStats"}
+							name="quizList"
+							label="Quiz List"
+							isActive={selected === "quizList"}
 							show={true}
-							icons="fa fa-bar-chart"
+							icons="fa fa-info"
 							sidebarItemColor="#6BD098"
 							clicked={this.onChangeSelected}/>
 					</ul>
+
 					}
+
+					{/*{this.props.currentUser && this.props.currentUser.isAdmin &&*/}
+
+					{/*<ul className="nav">*/}
+					{/*	<FirstLevelItem*/}
+					{/*		name="quizStats"*/}
+					{/*		label="Quiz Stats"*/}
+					{/*		isActive={selected === "quizStats"}*/}
+					{/*		show={true}*/}
+					{/*		icons="fa fa-bar-chart"*/}
+					{/*		sidebarItemColor="#6BD098"*/}
+					{/*		clicked={this.onChangeSelected}/>*/}
+					{/*</ul>*/}
+					{/*}*/}
 
 					<ul className="nav" style={{position:"fixed", width:"260px", bottom: "0", zIndex:"100000"}}>
 						<li

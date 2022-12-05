@@ -6,6 +6,7 @@ import {ACCESS_TOKEN} from '../constants';
 
 import {Form, Input, Button, Icon, notification,Modal} from 'antd';
 import {Col, Label, Row} from "reactstrap";
+import {showAxiosError} from "../util/Helpers";
 
 const FormItem = Form.Item;
 
@@ -65,10 +66,13 @@ class LoginForm extends Component {
 					}).catch(error => {
 					console.log("error==>",error)
 					// if (error.response.status === 401) {
-					notification.error({
-						message: 'QUIZ ENGINE APPLICATION',
-						description: 'Username / Password mismatch. Please try again!'
-					});
+					// notification.error({
+					// 	message: 'QUIZ ENGINE APPLICATION',
+					// 	//description: 'Username / Password mismatch. Please try again!'
+					// 	description: error.description
+					// });
+
+					showAxiosError(error);
 				});
 			}
 		});
